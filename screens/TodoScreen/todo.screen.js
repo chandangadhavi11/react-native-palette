@@ -16,24 +16,25 @@ import styled from "styled-components";
 import AddTodoSection from "./addtodo.section";
 import PaletteInputText from "../../components/TextInput/input.text";
 import TabNavigationBar from "./navigation.section";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoListSection from "./todoList.section";
+import { getAllTodos } from "../../apis/todo.api";
 
-const ProfileLeftTopBar = () => {
+const ProfileLeftTopBar = ({ onPress }) => {
     return (
         <Box marginRight={46}>
             <ProfileIcon size={75}
-                onPress={() => { console.log("Chandan") }} />
+                onPress={onPress} />
         </Box>
 
     );
 }
 
-const ProfileRightTopBar = () => {
+const ProfileRightTopBar = ({ onPress }) => {
     return (
         <Box>
             <SearchButton
-                onPress={() => { console.log("Chandan") }} />
+                onPress={onPress} />
         </Box>
     );
 }
@@ -65,15 +66,16 @@ const IconCard = () => {
 
 
 
-export default function TodoScreen() {
+export default function TodoScreen({ navigation }) {
     const [sectionIndex, setSectionIndex] = useState(1);
 
     return (
         <SafeAreaView>
-
             <PaletteTopBar
-                renderLeft={() => <ProfileLeftTopBar />}
-                renderRight={() => <ProfileRightTopBar />}
+                renderLeft={() => <ProfileLeftTopBar
+                    onPress={() => { navigation.navigate('MyProfile'); }} />}
+                renderRight={() => <ProfileRightTopBar
+                    onPress={() => { console.log("Chandan") }} />}
                 topBarTitleText="To do" />
 
             <FullWidthBox>

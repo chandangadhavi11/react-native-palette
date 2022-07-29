@@ -6,7 +6,7 @@ export const Box = styled.View`
     margin-top: ${props => props.marginTop || "0px"};
     margin-bottom: ${props => props.marginBottom || "0px"};
     margin-left: ${props => props.marginLeft || "0px"};
-    margin-right: ${props => props.marginRight || "0px"};
+    margin-right: ${props => `${props.marginRight}` || "0px"};
 
     padding-top: ${props => props.paddingTop || "0px"};
     padding-bottom: ${props => props.paddingBottom || "0px"};

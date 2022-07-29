@@ -21,8 +21,8 @@ const FlexBox = styled.View`
         `height: ${props.height || "auto"};`
     }
     ${props => props.horizontalMargin &&
-        `margin-right: ${props.horizontalMargin};
-        margin-left: ${props.horizontalMargin};`
+        `margin-right: ${props.horizontalMargin}px;
+        margin-left: ${props.horizontalMargin}px;`
     }
 
     

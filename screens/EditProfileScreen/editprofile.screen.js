@@ -11,23 +11,22 @@ import StrokeButton from "../../components/Button/button.style";
 import IconWithText from "../../components/Icon/iconText";
 import { Card } from "../../ui/Card/card.ui";
 import Icon from "../../components/Icon/icon";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ProfileLeftTopBar = ({ onPress }) => {
+const ProfileLeftTopBar = () => {
     return (
         <Box marginRight={46}>
             <BackButton
-                onPress={onPress} />
+                onPress={() => { console.log("Chandan") }} />
         </Box>
 
     );
 }
 
-const ProfileRightTopBar = ({ onPress }) => {
+const ProfileRightTopBar = () => {
     return (
         <Box>
             <LogOutButton
-                onPress={onPress} />
+                onPress={() => { console.log("Chandan") }} />
         </Box>
     );
 }
@@ -58,28 +57,13 @@ const IconCard = () => {
 
 
 
-export default function MyProfileScreen({ navigation }) {
-    const onClickedLogoutHandler = () => {
-        console.log("Logout");
-        AsyncStorage.setItem('token_key', "logout").then(() => {
-            navigation.navigate('Login');
-        }
-        ).catch(err => {
-            console.log(err);
-        }
-        );
-    }
-    const onClickedBackHandler = () => {
-        console.log("Back");
-        navigation.goBack();
-    }
+export default function EditProfileScreen() {
     return (
         <SafeAreaView>
+
             <PaletteTopBar
-                renderLeft={() => <ProfileLeftTopBar
-                    onPress={onClickedBackHandler} />}
-                renderRight={() => <ProfileRightTopBar
-                    onPress={onClickedLogoutHandler} />}
+                renderLeft={() => <ProfileLeftTopBar />}
+                renderRight={() => <ProfileRightTopBar />}
                 topBarTitleText="My Profile"
             />
 

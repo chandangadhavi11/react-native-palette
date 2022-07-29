@@ -1,3 +1,4 @@
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components"
 import Icon from "../Icon/icon";
 
@@ -14,11 +15,14 @@ align-items: center;
 `
 
 
-export default function SearchButton() {
+export default function SearchButton({ onPress }) {
     return (
-        <SearchButtonContainer>
-            <Icon source={require('../../assets/search_icon.png')}
-                size={16} />
-        </SearchButtonContainer>
+        <TouchableOpacity onPress={onPress}>
+            <SearchButtonContainer>
+                <Icon source={require('../../assets/search_icon.png')}
+                    size={16} />
+            </SearchButtonContainer>
+        </TouchableOpacity>
+
     );
 }

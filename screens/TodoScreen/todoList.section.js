@@ -18,36 +18,41 @@ import ByMeButton from "../../components/Button/byme.button";
 import styled from "styled-components";
 import AddTodoSection from "./addtodo.section";
 import PaletteInputText from "../../components/TextInput/input.text";
+import { getAllTodos } from "../../apis/todo.api";
+import { useEffect } from "react";
+import MaxDimensionLoading from "../../components/Loading/loading.style";
 
-export default function TodoListSection() {
-    const LineDecorator = styled.View`
+const LineDecorator = styled.View`
     width: 6px;
     height: ${props => props.height ? props.height : "1"}px;
 
     background:  #595FDD;
 
     ${props => props.topRoundBorder &&
-            `border-top-right-radius: 25px;
+        `border-top-right-radius: 25px;
             border-top-left-radius: 25px;`
-        }
+    }
     ${props => props.bottomRoundBorder &&
-            `border-bottom-right-radius: 25px;
+        `border-bottom-right-radius: 25px;
         border-bottom-left-radius: 25px;`
-        }
+    }
     `
-    const Assignee = styled.View`
+const Assignee = styled.View`
     width: 30px;
     height: 30px;
     margin-top: 4px;
     background: #ADADAD;
     border-radius: 200px;`
-    return (
-        <FullWidthBox>
-            {/* First item */}
+export default function TodoListSection() {
+
+
+    const { data: todoItems, loading: todoLoading, error: todoError } = getAllTodos();
+
+    const TodoListItem = ({ item }) => {
+        return (
             <FullWidthBox backgroundColor={"#FFDEDE"}
                 height={122}
                 horizontalPadding={12}>
-
                 <RowFlexBox fullHeight={true}>
                     <ColumnFlexBox marginTop={16}>
                         <PaletteText>Jun 20,</PaletteText>
@@ -55,17 +60,15 @@ export default function TodoListSection() {
                         <PaletteText size={12}>6 am</PaletteText>
                         <PaletteText size={12} color={"#E06666"}>Overdue</PaletteText>
                     </ColumnFlexBox>
-
                     <ColumnFlexBox marginLeft={40} fullHeight={true} centerItems={true}>
                         <LineDecorator bottomRoundBorder={true} height={18} />
                         <Assignee />
                         <LineDecorator style={{ marginTop: "auto", order: "2" }} topRoundBorder={true} height={64} />
                     </ColumnFlexBox>
-
                     <ColumnFlexBox marginLeft={10}>
                         <ColumnFlexBox marginTop={10}>
                             <PaletteText size={10} color={"#595FDD8A"}>COLLEGE APPLICATION</PaletteText>
-                            <PaletteText>Apply to Montgomery College</PaletteText>
+                            <PaletteText>{item?.title}</PaletteText>
                             <RowFlexBox marginTop={26} width={240}>
                                 <Icon source={require('../../assets/file_icon.png')} size={18} />
                                 <Box margin={6} />
@@ -77,9 +80,27 @@ export default function TodoListSection() {
                         </ColumnFlexBox>
                     </ColumnFlexBox>
                 </RowFlexBox>
-
-
             </FullWidthBox>
+        )
+    }
+
+    useEffect(() => {
+        console.log(todoItems, todoLoading, todoError);
+    }, [
+        todoItems,
+        todoLoading,
+        todoError
+    ]);
+
+    return (
+        <FullWidthBox>
+            {todoLoading ?
+                <MaxDimensionLoading marginTop={30} />
+                :
+                todoItems.map((item, index) => {
+                    return <TodoListItem key={index} item={item} />
+                })
+            }
         </FullWidthBox >
     );
 }
