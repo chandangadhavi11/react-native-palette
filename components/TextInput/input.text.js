@@ -17,8 +17,8 @@ const StyledTextInput = styled.TextInput`
     padding-left: 16px;
 
     ${props => props.horizontalMargin &&
-        `margin-right: ${props.horizontalMargin};
-        margin-left: ${props.horizontalMargin};`
+        `margin-right: ${props.horizontalMargin}px;
+        margin-left: ${props.horizontalMargin}px;`
     }
 `
 
