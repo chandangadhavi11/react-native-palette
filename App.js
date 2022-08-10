@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import LoadingScreen from './screens/LoadingScreen/loading.screen';
 import { LogBox } from 'react-native';
+import TodoDetailScreen from './screens/TodoDetailScreen/todoDetails.screen';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="MyProfile" component={MyProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Todo" component={TodoScreen} options={{ headerShown: false }} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="TodoDetails" component={TodoDetailScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

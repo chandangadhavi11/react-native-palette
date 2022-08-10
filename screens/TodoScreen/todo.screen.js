@@ -18,7 +18,8 @@ import PaletteInputText from "../../components/TextInput/input.text";
 import TabNavigationBar from "./navigation.section";
 import { useEffect, useState } from "react";
 import TodoListSection from "./todoList.section";
-import { getAllTodos } from "../../apis/todo.api";
+import SelectAssigneeSection from "../../components/Modal/selectAssignee.modal";
+
 
 const ProfileLeftTopBar = ({ onPress }) => {
     return (
@@ -67,7 +68,11 @@ const IconCard = () => {
 
 
 export default function TodoScreen({ navigation }) {
+
     const [sectionIndex, setSectionIndex] = useState(1);
+    const onItemClickedHandler = (id) => {
+        navigation.navigate({ name: 'TodoDetails', params: { id: id } })
+    }
 
     return (
         <SafeAreaView>
@@ -75,7 +80,7 @@ export default function TodoScreen({ navigation }) {
                 renderLeft={() => <ProfileLeftTopBar
                     onPress={() => { navigation.navigate('MyProfile'); }} />}
                 renderRight={() => <ProfileRightTopBar
-                    onPress={() => { console.log("Chandan") }} />}
+                    onPress={() => { console.log("CHANDAN"); }} />}
                 topBarTitleText="To do" />
 
             <FullWidthBox>
@@ -95,11 +100,10 @@ export default function TodoScreen({ navigation }) {
             <TabNavigationBar onSelectTab={setSectionIndex} currentTab={sectionIndex} />
 
             {sectionIndex === 0 && <AddTodoSection />}
-            {sectionIndex === 1 && <TodoListSection />}
-            {sectionIndex === 2 && <TodoListSection />}
-            {sectionIndex === 3 && <TodoListSection />}
-            {sectionIndex === 4 && <TodoListSection />}
-
+            {sectionIndex === 1 && <TodoListSection onItemClickedHandler={onItemClickedHandler} />}
+            {sectionIndex === 2 && <TodoListSection onItemClickedHandler={onItemClickedHandler} />}
+            {sectionIndex === 3 && <TodoListSection onItemClickedHandler={onItemClickedHandler} />}
+            {sectionIndex === 4 && <TodoListSection onItemClickedHandler={onItemClickedHandler} />}
 
         </SafeAreaView >
 

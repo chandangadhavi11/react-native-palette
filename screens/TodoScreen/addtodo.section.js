@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components"
+import { getAllUsers } from "../../apis/user.api";
 import StrokeButton from "../../components/Button/button.style";
 import Icon from "../../components/Icon/icon";
 import IconWithText from "../../components/Icon/iconText";
+import SelectAssigneeSection from "../../components/Modal/selectAssignee.modal";
+import UploadResourcesModal from "../../components/Modal/uploadResources.modal";
 import PaletteText from "../../components/Text/text.style";
 import PaletteInputText from "../../components/TextInput/input.text";
 import { Box, FullWidthBox } from "../../ui/Box/box.ui";
@@ -75,70 +79,113 @@ const UploadResources = () => {
 }
 
 export default function AddTodoSection() {
+    const [selectAssigneeModal, setSelectAssigneeModal] = useState({
+        open: false,
+    });
+
+    const [uploadResourcesModal, setUploadResourcesModal] = useState({
+        open: false,
+    });
+
+
+
+    const onClickedSelectAssignee = () => {
+        setSelectAssigneeModal({
+            open: !selectAssigneeModal.open,
+        });
+    }
+
+    const onClickedUploadResources = () => {
+        setUploadResourcesModal({
+            open: !selectAssigneeModal.open,
+        });
+    }
+
+
     return (
-        <FullWidthBox>
-            <ColumnFlexBox fullWidth={true} centerItems={true}>
+        <>
+            <FullWidthBox>
+                <ColumnFlexBox fullWidth={true} centerItems={true}>
 
-                <RowFlexBox marginTop={30}>
-                    <AssigneeContainer>
-                        <AssigneeIconContainer>
-                            <Icon size={20}
-                                source={require("../../assets/add_assignee_icon.png")} />
-                        </AssigneeIconContainer>
-                        <Box marginLeft={10}>
-                            <PaletteText
-                                color={"#4B5D6B"}>Assignees</PaletteText>
+                    <RowFlexBox marginTop={30}>
+                        <TouchableOpacity onPress={onClickedSelectAssignee}>
+                            <AssigneeContainer>
+                                <AssigneeIconContainer>
+                                    <Icon size={20}
+                                        source={require("../../assets/add_assignee_icon.png")} />
+                                </AssigneeIconContainer>
+                                <Box marginLeft={10}>
+                                    <PaletteText
+                                        color={"#4B5D6B"}>Assignees</PaletteText>
+                                </Box>
+                            </AssigneeContainer>
+                        </TouchableOpacity>
+
+                        <Box marginLeft={20}>
+                            <AddTodoBoxContainer >
+                                <PaletteText color={"#4B5D6B"}>Todo Type</PaletteText>
+                                <Box marginLeft={50}>
+                                    <Icon size={20}
+                                        source={require("../../assets/back_icon.png")} />
+                                </Box>
+                            </AddTodoBoxContainer>
                         </Box>
-                    </AssigneeContainer>
-                    <Box marginLeft={20}>
-                        <AddTodoBoxContainer >
-                            <PaletteText color={"#4B5D6B"}>Assignees</PaletteText>
-                            <Box marginLeft={50}>
-                                <Icon size={20}
-                                    source={require("../../assets/back_icon.png")} />
-                            </Box>
-                        </AddTodoBoxContainer>
-                    </Box>
 
-                </RowFlexBox>
+                    </RowFlexBox>
 
-                <FullWidthBox horizontalPadding={40} marginTop={30}>
-                    <AddTodoTextInput placeholder={"Enter action text"} />
-                </FullWidthBox>
+                    <FullWidthBox horizontalPadding={40} marginTop={30}>
+                        <AddTodoTextInput placeholder={"Enter action text"} />
+                    </FullWidthBox>
 
-                <RowFlexBox marginTop={30}>
-                    <Box horizontalMargin={20}>
-                        <AddTodoBoxContainer>
-                            <IconWithText text={"Due Date"} />
-                        </AddTodoBoxContainer>
-                    </Box>
-                    <Box horizontalMargin={20}>
-                        <AddTodoBoxContainer>
-                            <IconWithText text={"Due Time"} />
-                        </AddTodoBoxContainer>
-                    </Box>
-                </RowFlexBox>
+                    <RowFlexBox marginTop={30}>
+                        <Box horizontalMargin={20}>
+                            <AddTodoBoxContainer>
+                                <IconWithText text={"Due Date"} />
+                            </AddTodoBoxContainer>
+                        </Box>
+                        <Box horizontalMargin={20}>
+                            <AddTodoBoxContainer>
+                                <IconWithText text={"Due Time"} />
+                            </AddTodoBoxContainer>
+                        </Box>
+                    </RowFlexBox>
 
-                <FullWidthBox horizontalPadding={40} marginTop={30}>
-                    <AddTodoDescriptionInput placeholder={"Enter Description"} />
-                </FullWidthBox>
+                    <FullWidthBox horizontalPadding={40} marginTop={30}>
+                        <AddTodoDescriptionInput placeholder={"Enter Description"} />
+                    </FullWidthBox>
 
-                <FullWidthBox centerItems={true} marginTop={30}>
-                    <TouchableOpacity>
-                        <UploadResources />
+                    <FullWidthBox centerItems={true} marginTop={30}>
+                        <TouchableOpacity onPress={onClickedUploadResources}>
+                            <UploadResources />
 
-                    </TouchableOpacity>
-                </FullWidthBox>
+                        </TouchableOpacity>
+                    </FullWidthBox>
 
-                <FullWidthBox horizontalPadding={100} marginTop={30}>
-                    <StrokeButton
-                        buttonColor={"#F86D70"}
-                        height={40}
-                        buttonText={"CREATE"}
-                        textColor={"white"} />
-                </FullWidthBox>
+                    <FullWidthBox horizontalPadding={100} marginTop={30}>
+                        <StrokeButton
+                            buttonColor={"#F86D70"}
+                            height={40}
+                            buttonText={"CREATE"}
+                            textColor={"white"} />
+                    </FullWidthBox>
 
-            </ColumnFlexBox>
-        </FullWidthBox >
+                </ColumnFlexBox>
+            </FullWidthBox >
+            <SelectAssigneeSection
+                open={selectAssigneeModal.open}
+                onClose={() => {
+                    setSelectAssigneeModal({
+                        open: false,
+                    })
+                }} />
+
+            <UploadResourcesModal
+                open={uploadResourcesModal.open}
+                onClose={() => {
+                    setUploadResourcesModal({
+                        open: false,
+                    })
+                }} />
+        </>
     );
 }

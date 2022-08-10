@@ -37,7 +37,9 @@ export const Box = styled.View`
         padding-bottom: ${props.verticalPadding}px;`
     }
 
-    background-color: ${props => props.backgroundColor || "0px"};
+    background-color: ${props => props.backgroundColor || "transparent"};
+    border-radius: ${props => props.borderRadius || "0px"};
+
 `
 
 export const FullWidthBox = styled(Box)`
@@ -46,5 +48,10 @@ export const FullWidthBox = styled(Box)`
 
 export const FloatRightBox = styled(Box)`
     margin-left: auto;
+    order: 2;
+`
+
+export const FloatBottomBox = styled(Box)`
+    margin-top: auto;
     order: 2;
 `

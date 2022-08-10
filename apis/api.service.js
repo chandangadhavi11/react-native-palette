@@ -10,7 +10,6 @@ const apiGetCall = (url) => {
         headers: headers,
     })
         .then(function (response) {
-            console.log(response);
             return response
         })
         .catch(function (error) {

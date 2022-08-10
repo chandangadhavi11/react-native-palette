@@ -6,7 +6,6 @@ const StyledText = styled.Text`
     font-style: normal;
     font-weight: 600;
     font-size: ${props => props.size || "16"}px;
-    line-height: 22px;
     /* identical to box height */
 
     color: ${props => props.color || "#2B2A29"};

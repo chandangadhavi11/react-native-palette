@@ -5,13 +5,14 @@ import { FullWidthBox } from "../../ui/Box/box.ui";
 
 
 export default function LoadingScreen({ navigation }) {
-    const [token, setToken] = useState(undefined);
+    const [token, setToken] = useState("");
     AsyncStorage.getItem('token_key')
         .then(token => {
             if (token) setToken(token);
         });
 
     useEffect(() => {
+        console.log(token);
         if (typeof token != "undefined" && token != null && token !== "logout") {
             navigation.navigate('Todo');
         }

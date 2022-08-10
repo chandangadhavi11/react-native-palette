@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text, Touchable, TouchableOpacity } from "react-native";
 import BackButton from "../../components/Button/back.button";
 import PaletteTopBar from "../../components/TopBar/top.bar";
 import { Grid } from "../../ui/Grid/grid";
@@ -43,43 +43,45 @@ const Assignee = styled.View`
     margin-top: 4px;
     background: #ADADAD;
     border-radius: 200px;`
-export default function TodoListSection() {
+export default function TodoListSection({ onItemClickedHandler }) {
 
 
     const { data: todoItems, loading: todoLoading, error: todoError } = getAllTodos();
 
-    const TodoListItem = ({ item }) => {
+    const TodoListItem = ({ item, onPress }) => {
         return (
             <FullWidthBox backgroundColor={"#FFDEDE"}
                 height={122}
                 horizontalPadding={12}>
-                <RowFlexBox fullHeight={true}>
-                    <ColumnFlexBox marginTop={16}>
-                        <PaletteText>Jun 20,</PaletteText>
-                        <PaletteText>2021</PaletteText>
-                        <PaletteText size={12}>6 am</PaletteText>
-                        <PaletteText size={12} color={"#E06666"}>Overdue</PaletteText>
-                    </ColumnFlexBox>
-                    <ColumnFlexBox marginLeft={40} fullHeight={true} centerItems={true}>
-                        <LineDecorator bottomRoundBorder={true} height={18} />
-                        <Assignee />
-                        <LineDecorator style={{ marginTop: "auto", order: "2" }} topRoundBorder={true} height={64} />
-                    </ColumnFlexBox>
-                    <ColumnFlexBox marginLeft={10}>
-                        <ColumnFlexBox marginTop={10}>
-                            <PaletteText size={10} color={"#595FDD8A"}>COLLEGE APPLICATION</PaletteText>
-                            <PaletteText>{item?.title}</PaletteText>
-                            <RowFlexBox marginTop={26} width={240}>
-                                <Icon source={require('../../assets/file_icon.png')} size={18} />
-                                <Box margin={6} />
-                                <Icon source={require('../../assets/link_icon.png')} size={18} />
-                                <FloatRightBox>
-                                    <PaletteText color={"#F98308"}>OPEN</PaletteText>
-                                </FloatRightBox>
-                            </RowFlexBox>
+                <TouchableOpacity onPress={onPress}>
+                    <RowFlexBox fullHeight={true}>
+                        <ColumnFlexBox marginTop={16}>
+                            <PaletteText>Jun 20,</PaletteText>
+                            <PaletteText>2021</PaletteText>
+                            <PaletteText size={12}>6 am</PaletteText>
+                            <PaletteText size={12} color={"#E06666"}>Overdue</PaletteText>
                         </ColumnFlexBox>
-                    </ColumnFlexBox>
-                </RowFlexBox>
+                        <ColumnFlexBox marginLeft={40} fullHeight={true} centerItems={true}>
+                            <LineDecorator bottomRoundBorder={true} height={18} />
+                            <Assignee />
+                            <LineDecorator style={{ marginTop: "auto", order: "2" }} topRoundBorder={true} height={64} />
+                        </ColumnFlexBox>
+                        <ColumnFlexBox marginLeft={10}>
+                            <ColumnFlexBox marginTop={10}>
+                                <PaletteText size={10} color={"#595FDD8A"}>COLLEGE APPLICATION</PaletteText>
+                                <PaletteText>{item?.title}</PaletteText>
+                                <RowFlexBox marginTop={26} width={240}>
+                                    <Icon source={require('../../assets/file_icon.png')} size={18} />
+                                    <Box margin={6} />
+                                    <Icon source={require('../../assets/link_icon.png')} size={18} />
+                                    <FloatRightBox>
+                                        <PaletteText color={"#F98308"}>OPEN</PaletteText>
+                                    </FloatRightBox>
+                                </RowFlexBox>
+                            </ColumnFlexBox>
+                        </ColumnFlexBox>
+                    </RowFlexBox>
+                </TouchableOpacity>
             </FullWidthBox>
         )
     }
@@ -92,15 +94,27 @@ export default function TodoListSection() {
         todoError
     ]);
 
+
+
     return (
         <FullWidthBox>
-            {todoLoading ?
-                <MaxDimensionLoading marginTop={30} />
-                :
-                todoItems.map((item, index) => {
-                    return <TodoListItem key={index} item={item} />
-                })
-            }
+            <ScrollView style={{ width: "100%" }}>
+                {todoLoading && todoItems === undefined ?
+                    <MaxDimensionLoading marginTop={30} />
+                    :
+                    todoItems.map((item, index) => {
+                        return (
+                            <TodoListItem
+                                key={index}
+                                item={item}
+                                onPress={() => {
+                                    onItemClickedHandler(item.id)
+                                }}
+                            />
+                        )
+                    })
+                }
+            </ScrollView>
         </FullWidthBox >
     );
 }

@@ -7,16 +7,15 @@ import PaletteText from "../Text/text.style";
 const IconContainer = styled.Image`
     width: ${props => props.size || "auto"}px;
     height: ${props => props.size || "auto"}px;
-    background: #D9D9D9;
+    background-color: ${props => props.backgroundColor || "transparent"};
 `
 
-export default function IconWithText({ onPress, source, text, ...props }) {
+export default function IconWithText({ onPress, source, text, textColor, ...props }) {
     return (
         <RowFlexBox>
             <IconContainer size={24} source={source} />
             <Box marginLeft={10}>
-                <PaletteText color="#929292BF">{text}</PaletteText>
-
+                <PaletteText color={textColor} >{text}</PaletteText>
             </Box>
         </RowFlexBox>
     );
